@@ -13,12 +13,12 @@ devis.listen({ host: "127.0.0.1", port: 3030 });
 // client.js
 const devis = require("devis");
 devis.connect({ id: "math", host: "127.0.0.1", port: 3030 }, async () => {
-    console.log(await devis.call({ clientId: "math", role: "math", cmd: "sum" }, { left: 1, right: 2 })); // 3
+    console.log(await devis.call({ role: "math", cmd: "sum" }, { left: 1, right: 2 })); // 3
     devis.close();
 });
 ```
 
-Async handlers, awaited calls, timeouts, parallel calls per connection, graceful shutdown and TypeScript types since Devis 4.
+The client needs no service name: each service announces its patterns, and Devis routes every call to the one that matches best, in turn when several instances run. Since Devis 4.1: partial matching, automatic reconnection, load balancing and OpenTelemetry traces across services, on top of async handlers, timeouts, graceful shutdown and TypeScript types.
 
 ```bash
 npm install devis   # Node.js 22 or later
@@ -29,7 +29,7 @@ npm install devis   # Node.js 22 or later
 | Package | What it does | |
 | --- | --- | --- |
 | [devis](https://github.com/Devisjs/devis) | The framework: patterns, local calls, TCP, Unix sockets, named pipes | [![npm](https://img.shields.io/npm/v/devis.svg)](https://www.npmjs.com/package/devis) |
-| [devisPattern](https://github.com/Devisjs/devisPattern) | The exact-match pattern matcher behind Devis | [![npm](https://img.shields.io/npm/v/devisPattern.svg)](https://www.npmjs.com/package/devisPattern) |
+| [devisPattern](https://github.com/Devisjs/devisPattern) | The pattern matcher behind Devis | [![npm](https://img.shields.io/npm/v/devisPattern.svg)](https://www.npmjs.com/package/devisPattern) |
 | [devis-mongo-client](https://github.com/Devisjs/devis-mongo-client) | MongoDB plugin | [![npm](https://img.shields.io/npm/v/devis-mongo-client.svg)](https://www.npmjs.com/package/devis-mongo-client) |
 | [devis-pub_sub-redis](https://github.com/Devisjs/devis-pub_sub-redis) | Redis pub/sub plugin | [![npm](https://img.shields.io/npm/v/devis-pub_sub-redis.svg)](https://www.npmjs.com/package/devis-pub_sub-redis) |
 | [devis_rabbitmq](https://github.com/Devisjs/devis_rabbitmq) | RabbitMQ transport with per-call RPC replies | [![npm](https://img.shields.io/npm/v/devis_rabbitmq.svg)](https://www.npmjs.com/package/devis_rabbitmq) |
