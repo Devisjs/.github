@@ -5,19 +5,20 @@
 ```javascript
 // math.js
 const devis = require("devis");
-devis.push({ role: "math", cmd: "sum" }, (args, done) => done(null, args.left + args.right));
+devis.push({ role: "math", cmd: "sum" }, async ({ left, right }) => left + right);
 devis.listen({ host: "127.0.0.1", port: 3030 });
 ```
 
 ```javascript
 // client.js
 const devis = require("devis");
-devis.connect({ id: "math", host: "127.0.0.1", port: 3030 }, () => {
-    devis.call({ clientId: "math", role: "math", cmd: "sum" }, { left: 1, right: 2 }, (err, result) => {
-        console.log(result); // 3
-    });
+devis.connect({ id: "math", host: "127.0.0.1", port: 3030 }, async () => {
+    console.log(await devis.call({ clientId: "math", role: "math", cmd: "sum" }, { left: 1, right: 2 })); // 3
+    devis.close();
 });
 ```
+
+Async handlers, awaited calls, timeouts, parallel calls per connection, graceful shutdown and TypeScript types since Devis 4.
 
 ```bash
 npm install devis   # Node.js 22 or later
